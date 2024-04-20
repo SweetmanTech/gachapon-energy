@@ -1,4 +1,3 @@
-import { FrameRequest, getFrameMessage } from '@coinbase/onchainkit/frame';
 import { NextRequest, NextResponse } from 'next/server';
 import { encodeFunctionData, parseEther } from 'viem';
 import { base } from 'viem/chains';
@@ -7,13 +6,6 @@ import { BUY_MY_COFFEE_CONTRACT_ADDR } from '../../config';
 import type { FrameTransactionResponse } from '@coinbase/onchainkit/frame';
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
-  const body: FrameRequest = await req.json();
-  const { isValid } = await getFrameMessage(body, { neynarApiKey: 'NEYNAR_ONCHAIN_KIT' });
-
-  if (!isValid) {
-    return new NextResponse('Message not valid', { status: 500 });
-  }
-
   const data = encodeFunctionData({
     abi: BuyMeACoffeeABI,
     functionName: 'buyCoffee',
