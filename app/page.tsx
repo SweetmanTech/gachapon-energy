@@ -16,12 +16,12 @@ const frameMetadata = getFrameMetadata({
 });
 
 export const metadata: Metadata = {
-  title: 'zizzamia.xyz',
-  description: 'LFG',
+  title: 'gachapon',
+  description: 'gachapon',
   openGraph: {
-    title: 'zizzamia.xyz',
-    description: 'LFG',
-    images: [`${NEXT_PUBLIC_URL}/park-1.png`],
+    title: 'gachapon',
+    description: 'gachapon',
+    images: [`${NEXT_PUBLIC_URL}/giphy.gif`],
   },
   other: {
     ...frameMetadata,
