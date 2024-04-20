@@ -3,8 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { NEXT_PUBLIC_URL } from '../../config';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  const body: FrameRequest = await req.json();
-
   const hash = [
     "bafybeidz67btzjqpafmdv2dszraw4a5iqhqexerzomx7zek5bykhvepnmy", 
     "bafybeig2bfjagttxrfbbmboposh5ghmwxugnnugk2c4snyxn3epinlai5y", 
@@ -24,7 +22,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         src: `https://cloudflare-ipfs.com/ipfs/${hash[Math.floor(Math.random() * hash.length)]}`,
         aspectRatio: '1:1',
       },
-      postUrl: `${NEXT_PUBLIC_URL}`,
+      postUrl: `${NEXT_PUBLIC_URL}/api/home`,
       state: {
         time: new Date().toISOString(),
       },
