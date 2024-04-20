@@ -3,12 +3,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { NEXT_PUBLIC_URL } from '../../config';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  const url = [
-    "https://cloudflare-ipfs.com/ipfs/bafybeidz67btzjqpafmdv2dszraw4a5iqhqexerzomx7zek5bykhvepnmy", 
-    "https://cloudflare-ipfs.com/ipfs/bafybeig2bfjagttxrfbbmboposh5ghmwxugnnugk2c4snyxn3epinlai5y", 
-    "https://cloudflare-ipfs.com/ipfs/bafybeigk7xpxe6zm76e74fqipdmgpy2uturank2dkgnshqxhuvg5htnaki", 
-    "https://cloudflare-ipfs.com/ipfs/bafkreifu73mes36vcuyayptrs5fsivg56nscqow25uqbqpz4xooud6v4by",
-    `${NEXT_PUBLIC_URL}/adn.gif`
+  const hash = [
+    "bafybeidz67btzjqpafmdv2dszraw4a5iqhqexerzomx7zek5bykhvepnmy", 
+    "bafybeig2bfjagttxrfbbmboposh5ghmwxugnnugk2c4snyxn3epinlai5y", 
+    "bafybeigk7xpxe6zm76e74fqipdmgpy2uturank2dkgnshqxhuvg5htnaki", 
+    "bafkreifu73mes36vcuyayptrs5fsivg56nscqow25uqbqpz4xooud6v4by"
   ]
 
   return new NextResponse(
@@ -17,9 +16,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         {
           label: `START OVER`,
         },
+        {
+          action: 'tx',
+          label: 'Collect Prize',
+          target: `${NEXT_PUBLIC_URL}/api/tx`,
+          postUrl: `${NEXT_PUBLIC_URL}/api/tx-success`,
+        },
       ],
       image: {
-        src: `${url[Math.floor(Math.random() * url.length)]}`,
+        src: `https://cloudflare-ipfs.com/ipfs/${hash[Math.floor(Math.random() * hash.length)]}`,
         aspectRatio: '1:1',
       },
       postUrl: `${NEXT_PUBLIC_URL}/api/home`,
