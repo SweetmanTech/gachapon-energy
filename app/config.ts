@@ -1,3 +1,5 @@
+import { FrameMetadataType } from "@coinbase/onchainkit";
+
 // use NODE_ENV to not have to change config based on where it's deployed
 export const NEXT_PUBLIC_URL =
   process.env.NODE_ENV == 'development' ? 'http://localhost:3000' : 'https://gachapon.vercel.app';
@@ -13,4 +15,4 @@ export const HOME_FRAME = {
     aspectRatio: '1:1',
   },
   postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
-}
+} as FrameMetadataType
