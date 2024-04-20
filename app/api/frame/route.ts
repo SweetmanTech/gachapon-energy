@@ -24,7 +24,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         src: `https://cloudflare-ipfs.com/ipfs/${hash[Math.floor(Math.random() * hash.length)]}`,
         aspectRatio: '1:1',
       },
-      postUrl: `${NEXT_PUBLIC_URL}/`,
+      postUrl: `${NEXT_PUBLIC_URL}`,
       state: {
         time: new Date().toISOString(),
       },
