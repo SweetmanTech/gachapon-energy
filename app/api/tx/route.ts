@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Address, encodeAbiParameters, encodeFunctionData, parseEther } from 'viem';
-import { base, zora } from 'viem/chains';
+import { zora } from 'viem/chains';
 import type { FrameTransactionResponse } from '@coinbase/onchainkit/frame';
 import { zora1155Implementation } from '@/lib/abi/zora1155Implementation';
 
