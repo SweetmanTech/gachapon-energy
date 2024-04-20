@@ -1,25 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { encodeFunctionData, parseEther } from 'viem';
+import { Address, encodeAbiParameters, encodeFunctionData, parseEther } from 'viem';
 import { base } from 'viem/chains';
-import BuyMeACoffeeABI from '../../_contracts/BuyMeACoffeeABI';
-import { BUY_MY_COFFEE_CONTRACT_ADDR } from '../../config';
 import type { FrameTransactionResponse } from '@coinbase/onchainkit/frame';
+import { zora1155Implementation } from '@/lib/abi/zora1155Implementation';
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
+  const minter = "0x04E2516A2c207E84a1839755675dfd8eF6302F0a" as Address
+  const tokenId = 1n
+  const quantity = 1n
+  const minterArguments  = encodeAbiParameters(
+    [
+      { name: 'mintTo', type: 'address' },
+      { name: 'comment', type: 'string' },
+    ],
+    ['0xcfBf34d385EA2d5Eb947063b67eA226dcDA3DC38', "FARCASTER FRAME COLLECT!!!"]
+  )
   const data = encodeFunctionData({
-    abi: BuyMeACoffeeABI,
-    functionName: 'buyCoffee',
-    args: [parseEther('1'), 'Coffee all day!'],
+    abi: zora1155Implementation,
+    functionName: 'mintWithRewards',
+    args: [minter, tokenId, quantity, minterArguments, "0xcfBf34d385EA2d5Eb947063b67eA226dcDA3DC38"],
   });
 
+  const BUENOS_AIRES_SONG_CAMP = "0xe88035cbc6703b18e2899fe2b5f6e435f00ade41"
   const txData: FrameTransactionResponse = {
     chainId: `eip155:${base.id}`, // Remember Base Sepolia might not work on Warpcast yet
     method: 'eth_sendTransaction',
     params: {
-      abi: [],
+      abi: zora1155Implementation,
       data,
-      to: BUY_MY_COFFEE_CONTRACT_ADDR,
-      value: parseEther('0.00004').toString(), // 0.00004 ETH
+      to: BUENOS_AIRES_SONG_CAMP,
+      value: parseEther('0.001554').toString(), 
     },
   };
   return NextResponse.json(txData);

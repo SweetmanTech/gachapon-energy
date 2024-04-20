@@ -16,6 +16,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         {
           label: `START OVER`,
         },
+        {
+          action: 'tx',
+          label: 'Collect Prize',
+          target: `${NEXT_PUBLIC_URL}/api/tx`,
+          postUrl: `${NEXT_PUBLIC_URL}/api/tx-success`,
+        },
       ],
       image: {
         src: `https://cloudflare-ipfs.com/ipfs/${hash[Math.floor(Math.random() * hash.length)]}`,
