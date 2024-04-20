@@ -1,4 +1,4 @@
-import { FrameRequest, getFrameMessage, getFrameHtmlResponse } from '@coinbase/onchainkit/frame';
+import { FrameRequest, getFrameHtmlResponse } from '@coinbase/onchainkit/frame';
 import { NextRequest, NextResponse } from 'next/server';
 import { NEXT_PUBLIC_URL } from '../../config';
 
@@ -6,18 +6,26 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   console.log("SWEETS body", body)
 
+  const hash = [
+    "bafybeidz67btzjqpafmdv2dszraw4a5iqhqexerzomx7zek5bykhvepnmy", 
+    "bafybeig2bfjagttxrfbbmboposh5ghmwxugnnugk2c4snyxn3epinlai5y", 
+    "bafybeigk7xpxe6zm76e74fqipdmgpy2uturank2dkgnshqxhuvg5htnaki", 
+    "bafybeieop26ciofle3ozb2xlylpwxwljxa6ravmuqgzar47ebxxqxeckqm",
+    "bafkreifu73mes36vcuyayptrs5fsivg56nscqow25uqbqpz4xooud6v4by"
+  ]
+
   return new NextResponse(
     getFrameHtmlResponse({
       buttons: [
         {
-          label: `PLAY`,
+          label: `START OVER`,
         },
       ],
       image: {
-        src: `${NEXT_PUBLIC_URL}/giphy.gif`,
+        src: `https://cloudflare-ipfs.com/ipfs/${hash[Math.floor(Math.random() * hash.length)]}`,
         aspectRatio: '1:1',
       },
-      postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
+      postUrl: `${NEXT_PUBLIC_URL}/`,
       state: {
         time: new Date().toISOString(),
       },
