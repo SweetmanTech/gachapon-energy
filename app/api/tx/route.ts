@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Address, encodeAbiParameters, encodeFunctionData, parseEther } from 'viem';
-import { base } from 'viem/chains';
+import { base, zora } from 'viem/chains';
 import type { FrameTransactionResponse } from '@coinbase/onchainkit/frame';
 import { zora1155Implementation } from '@/lib/abi/zora1155Implementation';
 
@@ -23,7 +23,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
 
   const BUENOS_AIRES_SONG_CAMP = "0xe88035cbc6703b18e2899fe2b5f6e435f00ade41"
   const txData: FrameTransactionResponse = {
-    chainId: `eip155:${base.id}`, // Remember Base Sepolia might not work on Warpcast yet
+    chainId: `eip155:${zora.id}`, // Remember Base Sepolia might not work on Warpcast yet
     method: 'eth_sendTransaction',
     params: {
       abi: zora1155Implementation,
