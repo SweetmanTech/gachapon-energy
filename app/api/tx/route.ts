@@ -3,8 +3,12 @@ import { Address, encodeAbiParameters, encodeFunctionData, parseEther } from 'vi
 import { zora } from 'viem/chains';
 import type { FrameTransactionResponse } from '@coinbase/onchainkit/frame';
 import { zora1155Implementation } from '@/lib/abi/zora1155Implementation';
+import { FrameRequest } from '@coinbase/onchainkit';
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
+  const body: FrameRequest = await req.json();
+
+  console.log("SWEETS REQ", body)
   const minter = "0x04E2516A2c207E84a1839755675dfd8eF6302F0a" as Address
   const tokenId = 1n
   const quantity = 1n
@@ -23,7 +27,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
 
   const BUENOS_AIRES_SONG_CAMP = "0xe88035cbc6703b18e2899fe2b5f6e435f00ade41"
   const txData: FrameTransactionResponse = {
-    chainId: `eip155:${zora.id}`, // Remember Base Sepolia might not work on Warpcast yet
+    chainId: `eip155:${zora.id}`,
     method: 'eth_sendTransaction',
     params: {
       abi: zora1155Implementation,
