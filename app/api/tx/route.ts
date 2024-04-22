@@ -9,7 +9,6 @@ import getVerifiedAddressesFromBody from '@/lib/farcaster/getVerifiedAddressesFr
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   const body: FrameRequest = await req.json();
   const verifiedAddresses = await getVerifiedAddressesFromBody(body)
-  console.log("SWEETS verifiedAddresses", verifiedAddresses)
   const minter = "0x04E2516A2c207E84a1839755675dfd8eF6302F0a" as Address
   const tokenId = BigInt(Math.floor(Math.random() * 6))
   const quantity = 1n
