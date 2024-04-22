@@ -4,20 +4,21 @@ import { zora } from 'viem/chains';
 import type { FrameTransactionResponse } from '@coinbase/onchainkit/frame';
 import { zora1155Implementation } from '@/lib/abi/zora1155Implementation';
 import { FrameRequest } from '@coinbase/onchainkit';
+import getVerifiedAddressesFromBody from '@/lib/farcaster/getVerifiedAddressesFromBody';
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   const body: FrameRequest = await req.json();
-
-  console.log("SWEETS REQ", body)
+  const verifiedAddresses = await getVerifiedAddressesFromBody(body)
+  console.log("SWEETS verifiedAddresses", verifiedAddresses)
   const minter = "0x04E2516A2c207E84a1839755675dfd8eF6302F0a" as Address
-  const tokenId = 1n
+  const tokenId = BigInt(Math.floor(Math.random() * 6))
   const quantity = 1n
   const minterArguments  = encodeAbiParameters(
     [
       { name: 'mintTo', type: 'address' },
       { name: 'comment', type: 'string' },
     ],
-    ['0xcfBf34d385EA2d5Eb947063b67eA226dcDA3DC38', "FARCASTER FRAME COLLECT!!!"]
+    [verifiedAddresses[0], "FARCASTER FRAME COLLECT!!!"]
   )
   const data = encodeFunctionData({
     abi: zora1155Implementation,
