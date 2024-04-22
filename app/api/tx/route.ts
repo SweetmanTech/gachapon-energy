@@ -12,6 +12,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   const minter = "0x04E2516A2c207E84a1839755675dfd8eF6302F0a" as Address
   const tokenId = BigInt(Math.floor(Math.random() * 6))
   const quantity = 1n
+  if (!verifiedAddresses?.[0]) return new Response("No verified address", { status: 400 });
   const minterArguments  = encodeAbiParameters(
     [
       { name: 'mintTo', type: 'address' },

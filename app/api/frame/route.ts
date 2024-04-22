@@ -3,11 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import getVerifiedAddressBalanceOf from '@/lib/zora/getVerifiedAddressBalanceOf';
 import getBallFrame from '@/lib/getBallFrame';
 import getVerifiedAddressesFromBody from '@/lib/farcaster/getVerifiedAddressesFromBody';
+import { Address } from 'viem';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   const verifiedAddresses = await getVerifiedAddressesFromBody(body)
-  const balanceOf = await getVerifiedAddressBalanceOf(verifiedAddresses)
+  const balanceOf = await getVerifiedAddressBalanceOf(verifiedAddresses as Address[])
   const isCollector = balanceOf > 0n 
 
   return new NextResponse(

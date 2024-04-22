@@ -1,4 +1,5 @@
 import { getFrameHtmlResponse } from '@coinbase/onchainkit/frame';
+import { FrameMetadataType } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { NEXT_PUBLIC_URL } from '../../config';
 
@@ -26,7 +27,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     state: {
       time: new Date().toISOString(),
     },
-  }
+  } as FrameMetadataType
 
   return new NextResponse(
     getFrameHtmlResponse(successFrame),

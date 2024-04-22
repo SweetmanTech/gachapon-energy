@@ -1,4 +1,5 @@
 import { NEXT_PUBLIC_URL } from '@/app/config';
+import { FrameMetadataType } from '@coinbase/onchainkit';
 
 const getBallFrame = (isCollector: boolean) => {
   const txLabel = isCollector ? 'Collect New Prize' : 'Insert Token';
@@ -29,7 +30,7 @@ const getBallFrame = (isCollector: boolean) => {
     state: {
       time: new Date().toISOString(),
     },
-  };
+  } as FrameMetadataType;
 };
 
 export default getBallFrame;
