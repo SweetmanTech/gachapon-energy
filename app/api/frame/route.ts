@@ -1,37 +1,18 @@
 import { FrameRequest, getFrameHtmlResponse } from '@coinbase/onchainkit/frame';
 import { NextRequest, NextResponse } from 'next/server';
-import { NEXT_PUBLIC_URL } from '../../config';
+import getVerifiedAddressBalanceOf from '@/lib/zora/getVerifiedAddressBalanceOf';
+import getBallFrame from '@/lib/getBallFrame';
+import getVerifiedAddressesFromBody from '@/lib/farcaster/getVerifiedAddressesFromBody';
+import { Address } from 'viem';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  const hash = [
-    "bafybeidz67btzjqpafmdv2dszraw4a5iqhqexerzomx7zek5bykhvepnmy", 
-    "bafybeig2bfjagttxrfbbmboposh5ghmwxugnnugk2c4snyxn3epinlai5y", 
-    "bafybeigk7xpxe6zm76e74fqipdmgpy2uturank2dkgnshqxhuvg5htnaki", 
-    "bafkreifu73mes36vcuyayptrs5fsivg56nscqow25uqbqpz4xooud6v4by"
-  ]
+  const body: FrameRequest = await req.json();
+  const verifiedAddresses = await getVerifiedAddressesFromBody(body)
+  const balanceOf = await getVerifiedAddressBalanceOf(verifiedAddresses as Address[])
+  const isCollector = balanceOf > 0n 
 
   return new NextResponse(
-    getFrameHtmlResponse({
-      buttons: [
-        {
-          label: `START OVER`,
-        },
-        {
-          action: 'tx',
-          label: 'Collect Prize',
-          target: `${NEXT_PUBLIC_URL}/api/tx`,
-          postUrl: `${NEXT_PUBLIC_URL}/api/tx-success`,
-        },
-      ],
-      image: {
-        src: `https://cloudflare-ipfs.com/ipfs/${hash[Math.floor(Math.random() * hash.length)]}`,
-        aspectRatio: '1:1',
-      },
-      postUrl: `${NEXT_PUBLIC_URL}/api/home`,
-      state: {
-        time: new Date().toISOString(),
-      },
-    }),
+    getFrameHtmlResponse(getBallFrame(isCollector)),
   );
 }
 

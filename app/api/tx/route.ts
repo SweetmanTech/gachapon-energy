@@ -3,17 +3,22 @@ import { Address, encodeAbiParameters, encodeFunctionData, parseEther } from 'vi
 import { zora } from 'viem/chains';
 import type { FrameTransactionResponse } from '@coinbase/onchainkit/frame';
 import { zora1155Implementation } from '@/lib/abi/zora1155Implementation';
+import { FrameRequest } from '@coinbase/onchainkit';
+import getVerifiedAddressesFromBody from '@/lib/farcaster/getVerifiedAddressesFromBody';
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
+  const body: FrameRequest = await req.json();
+  const verifiedAddresses = await getVerifiedAddressesFromBody(body)
   const minter = "0x04E2516A2c207E84a1839755675dfd8eF6302F0a" as Address
-  const tokenId = 1n
+  const tokenId = BigInt(Math.floor(Math.random() * 6))
   const quantity = 1n
+  if (!verifiedAddresses?.[0]) return new Response("No verified address", { status: 400 });
   const minterArguments  = encodeAbiParameters(
     [
       { name: 'mintTo', type: 'address' },
       { name: 'comment', type: 'string' },
     ],
-    ['0xcfBf34d385EA2d5Eb947063b67eA226dcDA3DC38', "FARCASTER FRAME COLLECT!!!"]
+    [verifiedAddresses[0], "FARCASTER FRAME COLLECT!!!"]
   )
   const data = encodeFunctionData({
     abi: zora1155Implementation,
@@ -23,7 +28,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
 
   const BUENOS_AIRES_SONG_CAMP = "0xe88035cbc6703b18e2899fe2b5f6e435f00ade41"
   const txData: FrameTransactionResponse = {
-    chainId: `eip155:${zora.id}`, // Remember Base Sepolia might not work on Warpcast yet
+    chainId: `eip155:${zora.id}`,
     method: 'eth_sendTransaction',
     params: {
       abi: zora1155Implementation,
