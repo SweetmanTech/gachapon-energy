@@ -21,6 +21,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       {
         label: "START OVER",
       },
+      {
+        action: 'tx',
+        label: "Collect New Prize",
+        target: `${NEXT_PUBLIC_URL}/api/tx`,
+        postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
+      },
     ],
     image ,
     postUrl: `${NEXT_PUBLIC_URL}/api/home`,
