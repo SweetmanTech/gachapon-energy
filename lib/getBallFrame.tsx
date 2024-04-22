@@ -21,7 +21,7 @@ const getBallFrame = (isCollector: boolean) => {
         action: 'tx',
         label: txLabel,
         target: `${NEXT_PUBLIC_URL}/api/tx`,
-        postUrl: `${NEXT_PUBLIC_URL}/api/success`,
+        postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
       },
     ],
     image,
