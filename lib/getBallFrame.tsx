@@ -9,10 +9,8 @@ const getBallFrame = (isCollector: boolean) => {
     : `${NEXT_PUBLIC_URL}/insert-token.gif`;
   const image = {
     src,
+    aspectRatio: '1:1',
   } as any;
-  if (isCollector) {
-    image.aspectRatio = '1:1';
-  }
   return {
     buttons: [
       {
