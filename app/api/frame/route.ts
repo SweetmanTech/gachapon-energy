@@ -8,16 +8,11 @@ import { Address } from 'viem';
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   const collection = req.url.split("collection=")[1] as Address
-  console.log("SWEETS collection", collection)
-
   const verifiedAddresses = await getVerifiedAddressesFromBody(body)
   const {balanceOf, tokenId} = await getVerifiedAddressBalance(collection, verifiedAddresses as Address[])
-  console.log("SWEETS tokenId", tokenId)
-
   const isCollector = balanceOf > 0n 
   const responseFrame = getBallFrame(isCollector)
   responseFrame.postUrl = `${responseFrame.postUrl}?collection=${collection}&tokenId=${tokenId}`
-  console.log("SWEETS responseFrame", responseFrame)
   return new NextResponse(
     getFrameHtmlResponse(responseFrame),
   );

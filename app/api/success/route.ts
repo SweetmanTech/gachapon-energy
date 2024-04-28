@@ -11,20 +11,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const collectionParam = queryParams[1] 
   const tokenId = queryParams[2]
   const collection = collectionParam.split("&")[0] as Address
-
-  console.log("SWEETS SUCCESS query params", queryParams)
-  console.log("SWEETS SUCCESS collection", collection)
-  console.log("SWEETS SUCCESS tokenId", tokenId)
   const uri = await getUri(collection, BigInt(tokenId))
-  console.log("SWEETS SUCCESS uri", uri)
   const urlLink = getLink(uri)
-  console.log("SWEETS urlLink", urlLink)
   const response = await fetch(urlLink)
   const data = await response.json()
-  console.log("SWEETS data", data)
   const {image: responseImage} = data
   const src = getLink(responseImage)
-  console.log("SWEETS src", src)
   const image = {
     src,
     aspectRatio: "1:1"
