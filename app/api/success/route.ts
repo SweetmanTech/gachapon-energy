@@ -2,16 +2,21 @@ import { getFrameHtmlResponse } from '@coinbase/onchainkit/frame';
 import { FrameMetadataType } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { NEXT_PUBLIC_URL } from '../../config';
+import { Address } from 'viem';
+import getUri from '@/lib/zora/getUri';
+import getLink from '@/lib/metadata/getLink';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  const hash = [
-    "bafybeidz67btzjqpafmdv2dszraw4a5iqhqexerzomx7zek5bykhvepnmy", 
-    "bafybeig2bfjagttxrfbbmboposh5ghmwxugnnugk2c4snyxn3epinlai5y", 
-    "bafybeigk7xpxe6zm76e74fqipdmgpy2uturank2dkgnshqxhuvg5htnaki", 
-    "bafkreifu73mes36vcuyayptrs5fsivg56nscqow25uqbqpz4xooud6v4by"
-  ]
-
-  const src = `https://cloudflare-ipfs.com/ipfs/${hash[Math.floor(Math.random() * hash.length)]}`
+  const queryParams = req.url.split("=")
+  const collectionParam = queryParams[1] 
+  const tokenId = queryParams[2]
+  const collection = collectionParam.split("&")[0] as Address
+  const uri = await getUri(collection, BigInt(tokenId))
+  const urlLink = getLink(uri)
+  const response = await fetch(urlLink)
+  const data = await response.json()
+  const {image: responseImage} = data
+  const src = getLink(responseImage)
   const image = {
     src,
     aspectRatio: "1:1"
