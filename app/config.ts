@@ -17,3 +17,4 @@ export const HOME_FRAME = {
   },
   postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
 } as FrameMetadataType
+

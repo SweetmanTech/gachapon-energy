@@ -7,8 +7,9 @@ import { Address } from 'viem';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
+  const collection = req.url.split("collection=")[1] as Address
   const verifiedAddresses = await getVerifiedAddressesFromBody(body)
-  const balanceOf = await getVerifiedAddressBalanceOf(verifiedAddresses as Address[])
+  const balanceOf = await getVerifiedAddressBalanceOf(collection, verifiedAddresses as Address[])
   const isCollector = balanceOf > 0n 
 
   return new NextResponse(
