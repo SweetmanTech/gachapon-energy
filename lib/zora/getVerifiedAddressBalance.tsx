@@ -42,7 +42,7 @@ const getVerifiedAddressBalance = async (
   const randomOwnedToken = ownedTokens[Math.floor(Math.random() * ownedTokens.length)];
   return {
     balanceOf: randomOwnedToken ? (randomOwnedToken.balance as bigint) : 0n,
-    tokenId: randomOwnedToken ? randomOwnedToken.tokenId : null, // Return null if no tokens are found
+    tokenId: randomOwnedToken ? randomOwnedToken.tokenId : null,
   };
 };
 
