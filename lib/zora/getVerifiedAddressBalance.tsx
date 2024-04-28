@@ -24,7 +24,6 @@ const getVerifiedAddressBalance = async (
     contracts,
   });
 
-  // Map response to include tokenId and the address, filter for owned tokens
   const ownedTokens = [];
   let responseIndex = 0;
   for (const address of verifiedAddresses) {
@@ -40,9 +39,7 @@ const getVerifiedAddressBalance = async (
     }
   }
 
-  // Select a random tokenId from those that are owned
   const randomOwnedToken = ownedTokens[Math.floor(Math.random() * ownedTokens.length)];
-
   return {
     balanceOf: randomOwnedToken ? (randomOwnedToken.balance as bigint) : 0n,
     tokenId: randomOwnedToken ? randomOwnedToken.tokenId : null, // Return null if no tokens are found
