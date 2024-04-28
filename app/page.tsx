@@ -6,10 +6,10 @@ const frameMetadata = getFrameMetadata(HOME_FRAME);
 
 export const metadata: Metadata = {
   title: 'gachapon',
-  description: 'gachapon',
+  description: 'by energy',
   openGraph: {
     title: 'gachapon',
-    description: 'gachapon',
+    description: 'by energy',
     images: [`${NEXT_PUBLIC_URL}/giphy.gif`],
   },
   other: {
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1>gachapon.vercel.app</h1>
+      <h1>gachapon-energy.vercel.app</h1>
     </>
   );
 }
